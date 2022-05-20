@@ -12,5 +12,11 @@ namespace RePrjClinicAppoint.Controllers
         {
             return View();
         }
+
+        public IActionResult fill_in_data()  //填入資料
+        {
+            return View();
+        }
+
     }
 }
