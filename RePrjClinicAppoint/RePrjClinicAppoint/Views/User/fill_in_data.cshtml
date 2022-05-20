@@ -60,25 +60,26 @@
     ViewData["Title"] = "病人資料填寫";
 }
 
-<form class="" id="">
-    <div class="div1">
-        <div class="div1_1">帳號</div>
-        <input type="text">
-        <div class="div1_1">密碼</div>
-        <input type="text">
-    </div>
+<div class="" id="form1">
+    
+        <div class="div1">
+            <div class="div1_1">帳號</div>
+            <input type="text" required placeholder="點擊此處輸入帳號" v-model="user.username">
+            <div class="div1_1">密碼</div>
+            <input type="text" required placeholder="點擊此處輸入密碼" v-model="user.userpassword">
+        </div>
 
-    <div class="div2">
-        <div>信箱</div>
-        <input type="text" class="input1">
-    </div>
+        <div class="div2">
+            <div>信箱</div>
+            <input type="text" class="input1" required placeholder="點擊此處輸入信箱" v-model="user.useremail">
+        </div>
 
-    <div class="div3">
-        <button class="btn1">送出</button>
-        <button class="btn2">清除</button>
-    </div>
-
-</form>
+        <div class="div3">
+            <button type="submit" class="btn1" v-on:click="login">送出</button>
+            <button class="btn2" href="#">清除</button>
+        </div>
+    
+</div>
 
 
 
@@ -87,6 +88,44 @@
 <script>
 
 
+    var aa = new Vue({
+        el: '#form1',
+        data: {
+            user: {
+                username: '',
+                userpassword: '',
+                useremail:''
+            }
+        },
+
+        methods: {
+            login: function () {
+                let logindata = new FormData();
+                logindata.append('UserName', this.user.username);
+                logindata.append('UserPassword', this.user.userpassword);
+                logindata.append('UserEmail', this.user.useremail);
+                axios({
+                    methods: 'post',
+                    url: '/User/pushUser',
+                    data: logindata,
+                    headers: { "Content-Type": 'multipart/form-data' }
+                })
+                    .then(function (re) {
+                        if (re.data == "OK") {
+                            alert('傳遞成功');
+                        } else {
+                            alert("回傳失敗");
+                        }
+                        console.log(re);
+                    })
+                    .catch(function (error) {
+                        alert('傳失敗啦!');
+                        console.log(error);
+                    });
+            }
+        }
+
+    });
 
 
 </script>
