@@ -1,0 +1,66 @@
+﻿@{ 
+    ViewData["Title"] = "管理者頁面";
+}
+
+
+<div id="appadmini">
+    <fieldset>
+
+        {{localpageg.name}}
+        <input type="text" v-model="docname" />
+        {{localpageg.gender}}
+        <input type="text" v-model="docgender" />
+        {{localpageg.account}}
+        <input type="text" v-model="docaccount" />
+        {{localpageg.password}}
+        <input type="text" v-model="docpassword" />
+  
+    </fieldset>
+    <button v-on:click="add()"> {{localpageg.reging}}</button>
+</div>
+
+<script>
+ new Vue(
+     {
+         el: '#appadmini',
+         data: {
+                 docname: '',
+                 docgender: 'Female',
+                 docaccount: '123',
+             docpassword: '123',
+             localpageg: {
+                 name: '醫生姓名:',
+                 gender: '性別:',
+                 account: '帳號:',
+                 password: '密碼:',
+                 reging:'送出'
+
+             }
+     
+
+
+         },
+         methods: {
+             add: function () {
+              
+                 let data = new FormData();
+
+                 data.append('Name', this.docname);
+                 data.append('Gender', this.docgender);
+                 data.append('Account', this.docaccount);
+                 data.append('Password', this.docpassword);
+
+                 let url = '/Admin/Create';
+                 axios.post(url,data
+                 )
+                     .then(function (response) {
+                         console.log(response);
+                     })
+                     .catch(function (error) {
+                         console.log(error);
+                     });
+             }
+         }
+        })
+
+</script>

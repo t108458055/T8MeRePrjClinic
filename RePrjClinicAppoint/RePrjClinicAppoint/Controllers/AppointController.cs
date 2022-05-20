@@ -7,18 +7,16 @@ using System.Threading.Tasks;
 
 namespace RePrjClinicAppoint.Controllers
 {
-    public class DoctorController : Controller
+    public class AppointController : Controller
     {
         private readonly DentalDbContext _db;  //給目前控制做讀取使用
 
-        public DoctorController(DentalDbContext db)
+        public AppointController (DentalDbContext db)
         {//DBcontext 引入至控制器
             db = _db;
         }
-        //掩飾
         public IActionResult Index()
         {
-           
             return View();
         }
     }
