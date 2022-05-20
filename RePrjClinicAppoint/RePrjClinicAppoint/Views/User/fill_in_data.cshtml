@@ -75,7 +75,7 @@
         </div>
 
         <div class="div3">
-            <button type="submit" class="btn1" v-on:click="login">送出</button>
+            <button type="submit" class="btn1" v-on:click="login()">送出</button>
             <button class="btn2" href="#">清除</button>
         </div>
     
@@ -105,7 +105,7 @@
                 logindata.append('UserPassword', this.user.userpassword);
                 logindata.append('UserEmail', this.user.useremail);
                 axios({
-                    methods: 'post',
+                    method: 'post',
                     url: '/User/pushUser',
                     data: logindata,
                     headers: { "Content-Type": 'multipart/form-data' }
