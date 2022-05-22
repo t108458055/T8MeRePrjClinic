@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RePrjClinicAppoint.Models;
 using RePrjClinicAppoint.Models.Entity;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,13 @@ namespace RePrjClinicAppoint.Controllers
 {
     public class UserController : Controller
     {
+        private readonly DentalDbContext _db;//給目前控制做讀取使用
+
+        //控制器環境設置
+        public UserController(DentalDbContext db)
+        {  //引入DbContext 使用
+            _db = db;
+        }
         public IActionResult Index()
         {
             return View();
@@ -23,8 +31,15 @@ namespace RePrjClinicAppoint.Controllers
 
         public IActionResult pushUser(NewUserModel NewUser)
         {
-            var YA = NewUser;
-            Console.WriteLine(YA);
+            //var YA = NewUser;
+            //Console.WriteLine(YA);
+            //去跟資料庫比對資料是否存在
+            var pushYa = _db.Patient.Where(c => c.Email == NewUser.UserEmail).DefaultIfEmpty().FirstOrDefault();
+            if (pushYa==null)
+            {
+                //ToDO 新增資料
+
+            }
             return Content("OK");
         }
         public class NewUserModel

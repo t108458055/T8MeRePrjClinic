@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace RePrjClinicAppoint.ViewModels
-{
+{ // This is Presentation Layer
     public class RegViewModel
     {
         public string Name { get; set; }

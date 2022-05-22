@@ -11,9 +11,10 @@ namespace RePrjClinicAppoint.Controllers
     {
         private readonly DentalDbContext _db;  //給目前控制做讀取使用
 
+        //控制器環境設置
         public AppointController (DentalDbContext db)
         {//DBcontext 引入至控制器
-            db = _db;
+            _db = db;
         }
         public IActionResult Index()
         {

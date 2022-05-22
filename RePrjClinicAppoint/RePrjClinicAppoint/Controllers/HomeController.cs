@@ -11,8 +11,9 @@ namespace RePrjClinicAppoint.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> _logger; //給目前控制做讀取使用
 
+        //控制器環境設置
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;

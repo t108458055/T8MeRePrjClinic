@@ -18,14 +18,32 @@
     </fieldset>
     <button v-on:click="add()"> {{localpageg.reging}}</button>
 </div>
+<hr />
+<div id="appres">
+    <table class="table-bordered">
+        <tr>
+            <th>Id</th>
+            <th>帳號</th>
+            <th>姓名</th>
+            <th>動作</th>
+        </tr>
+        <tr>
+            <td>{{item.id}}</td>
+            <td>{{item.account}}</td>
+            <td>{{item.name}}</td>
+            <td></td>
+        </tr>
+    </table>
+</div>
 
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
  new Vue(
      {
          el: '#appadmini',
          data: {
                  docname: '',
-                 docgender: 'Female',
+                 docgender: '',
                  docaccount: '123',
              docpassword: '123',
              localpageg: {
@@ -34,15 +52,11 @@
                  account: '帳號:',
                  password: '密碼:',
                  reging:'送出'
-
              }
-     
-
-
          },
          methods: {
              add: function () {
-              
+   
                  let data = new FormData();
 
                  data.append('Name', this.docname);
@@ -51,16 +65,47 @@
                  data.append('Password', this.docpassword);
 
                  let url = '/Admin/Create';
-                 axios.post(url,data
+                 axios.post(url,data,
+                    {
+                         headers: {
+                             'Content-Type': 'application/x-www-form-urlencoded'
+                                         }
+                     }
+                  
                  )
                      .then(function (response) {
-                         console.log(response);
+                        alert(response.data);
+
                      })
                      .catch(function (error) {
                          console.log(error);
                      });
              }
          }
+        })
+
+</script>
+
+<script>
+    new Vue(
+        {
+            el: '#appres',
+            data() {
+                return {
+                    item: {
+                        id: "1",
+                        account: "2",
+                        name: "3",
+                    }
+                }
+            },
+            mounted: function () {
+                var self = this;
+                let url = '//';
+                axios.get(url)
+                    .then(function (res) { console.log(res.data); })
+                    .catch(function (err) { console.log(err); });
+            }
         })
 
 </script>
