@@ -27,7 +27,7 @@
             <th>姓名</th>
             <th>動作</th>
         </tr>
-        <tr>
+        <tr v-for="(item,index) of searchalldoclist">
             <td>{{item.id}}</td>
             <td>{{item.account}}</td>
             <td>{{item.name}}</td>
@@ -92,6 +92,7 @@
             el: '#appres',
             data() {
                 return {
+                    searchalldoclist: {},  //給前端呈現使用
                     item: {
                         id: "1",
                         account: "2",
@@ -100,10 +101,15 @@
                 }
             },
             mounted: function () {
+                // 綁定
                 var self = this;
-                let url = '//';
+                let url = '/Admin/Getlist';
                 axios.get(url)
-                    .then(function (res) { console.log(res.data); })
+                    .then(function (res) {
+                        console.log(res.data);
+                        self.searchalldoclist=res.data; //把傳回之資料庫的資料置入前端呈現
+
+                    })
                     .catch(function (err) { console.log(err); });
             }
         })

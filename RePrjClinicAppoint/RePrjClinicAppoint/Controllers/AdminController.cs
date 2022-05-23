@@ -60,12 +60,20 @@ namespace RePrjClinicAppoint.Controllers
             return Content("失敗");
         }
 
-        ////TODO從資料庫拿取文件
-        //public docshowViewModel Getlist()
-        //{
-        //    List<docshowViewModel> getuserall = _db.Doctor.Where(x=>x.ToString);
+        //TODO從資料庫拿取文件
+        public List <docshowViewModel> Getlist()
+        {  //使用list<>用ViewMoodel做承接所需之資料
+            // List<docshowViewModel> dicshow = new List<docshowViewModel>();
+            //創建var 的變數去接 資料庫的資料表new一個物件去接資料,並轉呈ToList<>
+            var result = _db.Doctor.Select(x=> new docshowViewModel 
+            {
+                id=x.DoctorId,
+                account=x.Account,
+                name=x.Name
+            
+            }).ToList();
 
-        //    return JsonResult(getuserall);
-        //}
+            return result;
+        }
     }
 }
