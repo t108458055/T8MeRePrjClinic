@@ -31,7 +31,10 @@
             <td>{{item.id}}</td>
             <td>{{item.account}}</td>
             <td>{{item.name}}</td>
-            <td></td>
+            <td>
+                <button v-on:click="deletedocId(item.id,index)">刪除</button>
+                <button>修改</button>
+            </td>
         </tr>
     </table>
 </div>
@@ -95,10 +98,27 @@
                 return {
                     searchalldoclist: {},  //給前端呈現使用
                     item: {
-                        id: "1",
-                        account: "2",
-                        name: "3",
+                        id: '',
+                        account:'',
+                        name: '',
                     }
+                }
+            },
+            methods: {
+                deletedocId: function (id) {
+
+                    //   let url = '/Admin/DeleteDoc/id?='+id;
+                    ///*   let data = id;*/
+                    //   console.log(id);
+                    //   console.log(typeof (id));
+
+                    axios.post('/Admin/DeleteDoc/' + id)
+                        .then(function (res) {
+                            console.log('痘痘');
+                            alert(res.data);
+                            location.reload();
+                        })
+                        .catch(function (err) { console.log(err); });
                 }
             },
             mounted: function () {
