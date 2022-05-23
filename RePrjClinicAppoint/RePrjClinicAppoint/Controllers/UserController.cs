@@ -34,13 +34,32 @@ namespace RePrjClinicAppoint.Controllers
             //var YA = NewUser;
             //Console.WriteLine(YA);
             //去跟資料庫比對資料是否存在
-            var pushYa = _db.Patient.Where(c => c.Email == NewUser.UserEmail).DefaultIfEmpty().FirstOrDefault();
-            if (pushYa==null)
-            {
-                //ToDO 新增資料
+            //var pushYa = _db.Patient.Where(c => c.Email == NewUser.UserEmail).DefaultIfEmpty().FirstOrDefault();
+            //if (pushYa==null)
+            //{
+            //ToDO 新增資料
 
+            //}
+            
+
+            var user = _db.Patient.Where(x => x.Account == NewUser.UserName).FirstOrDefault();
+            if(user == null)
+            {
+                _db.Patient.Add(new Models.Entity.Patient()
+                {
+                    Account = NewUser.UserName,
+                    Password=NewUser.UserPassword,
+                    Email=NewUser.UserEmail
+                });
+                _db.SaveChanges();
+                return Content("OK");
             }
-            return Content("OK");
+            else
+            {
+                return Content("fail");
+            }
+
+
         }
         public class NewUserModel
         {

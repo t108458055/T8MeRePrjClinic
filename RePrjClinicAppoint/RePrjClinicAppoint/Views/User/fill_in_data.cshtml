@@ -28,7 +28,7 @@
     }
 
     .input1 {
-        width: 45%;
+        width: 100%;
     }
 
     input {
@@ -55,77 +55,140 @@
     .btn2 {
         color: red;
     }
+    .red{
+        color:red;
+        font-size:20px;
+        padding-right:2rem;
+    }
+    .padding-left {
+        padding-left:2rem;
+    }
 </style>
 @{
     ViewData["Title"] = "病人資料填寫";
 }
 
 <div class="" id="form1">
-    
-        <div class="div1">
-            <div class="div1_1">帳號</div>
-            <input type="text" required placeholder="點擊此處輸入帳號" v-model="user.username">
-            <div class="div1_1">密碼</div>
-            <input type="text" required placeholder="點擊此處輸入密碼" v-model="user.userpassword">
-        </div>
 
-        <div class="div2">
-            <div>信箱</div>
-            <input type="text" class="input1" required placeholder="點擊此處輸入信箱" v-model="user.useremail">
+    <div class="div2">
+        <div class="">帳號</div>
+        <div class="padding-left">
+            <input type="text" class="input1" required placeholder="點擊此處輸入帳號" v-model="user.username" v-on:blur="blurName()">
         </div>
+        <div class="red">{{text.name}}</div>
+    </div>
+
+    <div class="div2">
+        <div class="">密碼</div>
+        <div class="padding-left">
+            <input type="text" class="input1" required placeholder="點擊此處輸入密碼" v-model="user.userpassword" v-on:blur="blurPassword()">
+        </div>
+        <div class="red">{{text.password}}</div>
+    </div>
+
+
+    <div class="div2">
+        <div>信箱</div>
+        <div class="padding-left">
+            <input type="text" class="input1" required placeholder="點擊此處輸入信箱" v-model="user.useremail" v-on:blur="blurEmail()">
+        </div>
+        <div class="red">{{text.email}}</div>
+    </div>
+
+
+
+
+
 
         <div class="div3">
             <button type="submit" class="btn1" v-on:click="login()">送出</button>
             <button class="btn2" href="#">清除</button>
         </div>
-    
-</div>
+
+    </div>
 
 
 
 
 
-<script>
+    <script>
 
 
-    var aa = new Vue({
-        el: '#form1',
-        data: {
-            user: {
-                username: '',
-                userpassword: '',
-                useremail:''
-            }
-        },
+        var aa = new Vue({
+            el: '#form1',
+            data: {
+                user: {
+                    username: '',
+                    userpassword: '',
+                    useremail: ''
+                },
+                text: {
+                    name: "",
+                    password: '',
+                    email:''
+                }
+            },
 
-        methods: {
-            login: function () {
-                let logindata = new FormData();
-                logindata.append('UserName', this.user.username);
-                logindata.append('UserPassword', this.user.userpassword);
-                logindata.append('UserEmail', this.user.useremail);
-                axios({
-                    method: 'post',
-                    url: '/User/pushUser',
-                    data: logindata,
-                    headers: { "Content-Type": 'multipart/form-data' }
-                })
-                    .then(function (re) {
-                        if (re.data == "OK") {
-                            alert('傳遞成功');
-                        } else {
-                            alert("回傳失敗");
-                        }
-                        console.log(re);
+            methods: {
+                blurName: function () {
+                    if (this.user.username == '') {
+                        this.text.name = "請輸入帳號";
+                    } else {
+                        this.text.name = "";
+                    }
+                },
+                blurPassword: function () {
+                    if (this.user.username == '') {
+                        this.text.password = "請輸入密碼";
+                    } else {
+                        this.text.password = "";
+                    }
+                },
+                blurEmail: function () {
+                    if (this.user.username == '') {
+                        this.text.email = "請輸入信箱";
+                    } else {
+                        this.text.email = "";
+                    }
+                },
+
+
+                login: function () {
+
+                    let logindata = new FormData();
+                    logindata.append('UserName', this.user.username);
+                    logindata.append('UserPassword', this.user.userpassword);
+                    logindata.append('UserEmail', this.user.useremail);
+                    if (this.user.username == "" || this.user.userpasswor == "" || this.user.useremail == "") {
+                        alert('資料未填齊全!');
+                        return
+                    }
+
+
+
+
+                    axios({
+                        method: 'post',
+                        url: '/User/pushUser',
+                        data: logindata,
+                        headers: { "Content-Type": 'multipart/form-data' }
                     })
-                    .catch(function (error) {
-                        alert('傳失敗啦!');
-                        console.log(error);
-                    });
+                        .then(function (re) {
+                            if (re.data == "OK") {
+                                alert('傳遞成功');
+                            } else {
+                                alert("註冊失敗帳號重複");
+                            }
+                            console.log(re);
+                        })
+                        .catch(function (error) {
+                            alert('傳失敗啦!');
+                            console.log(error);
+                        });
+                }
             }
-        }
 
-    });
+        });
 
 
-</script>
+    </script>
