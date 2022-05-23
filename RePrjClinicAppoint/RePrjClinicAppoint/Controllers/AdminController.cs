@@ -34,7 +34,7 @@ namespace RePrjClinicAppoint.Controllers
             if (!ModelState.IsValid)
             {
                 //去資料庫比對資料是否存在
-                var register = _db.Doctor.Where(c => c.Account == model.Account).DefaultIfEmpty().FirstOrDefault();
+                var register = _db.Doctor.Where(c => c.Account == model.Account).FirstOrDefault();
                 if (register == null)
                 {
                     //TODO新增資料
@@ -74,6 +74,26 @@ namespace RePrjClinicAppoint.Controllers
             }).ToList();
 
             return result;
+        }
+
+
+        //TODO 刪除資料庫的資凹
+        [Route("[controller]/[action]/{id}")]
+        [HttpPost]
+        public  IActionResult DeleteDoc([FromRoute] int? id)
+        {
+            var result = _db.Doctor.Where(x => x.DoctorId == id).FirstOrDefault();
+
+            if (result != null)
+            {
+                _db.Doctor.Remove(result);
+                _db.SaveChanges();
+                return Content("刪除成功");
+            }
+            else
+            {
+                return Content("失敗");
+            }
         }
     }
 }

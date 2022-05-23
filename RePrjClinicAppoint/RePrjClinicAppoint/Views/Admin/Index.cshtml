@@ -5,18 +5,31 @@
 
 <div id="appadmini">
     <fieldset>
-
-        {{localpageg.name}}
-        <input type="text" v-model="docname" />
-        {{localpageg.gender}}
-        <input type="text" v-model="docgender" />
-        {{localpageg.account}}
-        <input type="text" v-model="docaccount" />
-        {{localpageg.password}}
-        <input type="text" v-model="docpassword" />
+        <div>
+            {{localpageg.name}}
+            <input type="text" v-model="docname" />
+        </div>
+        <div>
+            {{localpageg.gender}}
+            <input type="text" v-model="docgender" />
+        </div>
+        <div>
+            {{localpageg.account}}
+            <input type="text" v-model="docaccount" />
+        </div>
+        <div>
+            {{localpageg.password}}
+            <input type="text" v-model="docpassword" />
+        </div>
+       
+ 
   
     </fieldset>
-    <button v-on:click="add()"> {{localpageg.reging}}</button>
+    <div>
+        <button v-on:click="add()">
+        {{localpageg.reging}}
+        </button>
+    </div>
 </div>
 <hr />
 <div id="appres">
@@ -31,9 +44,13 @@
             <td>{{item.id}}</td>
             <td>{{item.account}}</td>
             <td>{{item.name}}</td>
-            <td></td>
+            <td>
+                <button v-on:click="deletedocId(item.id,index)">刪除</button>
+                <button>修改</button>
+            </td>
         </tr>
     </table>
+  
 </div>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -74,8 +91,10 @@
                   
                  )
                      .then(function (response) {
-                        alert(response.data);
+                         alert(response.data);
 
+
+                         location.reload();
                      })
                      .catch(function (error) {
                          console.log(error);
@@ -92,18 +111,35 @@
             el: '#appres',
             data() {
                 return {
-                    searchalldoclist: {},  //給前端呈現使用
+                    searchalldoclist: [],  //給前端呈現使用
                     item: {
-                        id: "1",
-                        account: "2",
-                        name: "3",
+                        id:'',
+                        account: '',
+                        name: '',
                     }
+                }
+            }, methods: {
+                deletedocId: function (id) {
+               
+                 //   let url = '/Admin/DeleteDoc/id?='+id;
+                 ///*   let data = id;*/
+                 //   console.log(id);
+                 //   console.log(typeof (id));
+
+                    axios.post('/Admin/DeleteDoc/'+ id)
+                        .then(function (res) {
+                            console.log('痘痘');
+                            alert(res.data);
+                            location.reload();
+                        })
+                        .catch(function (err) { console.log(err); });
                 }
             },
             mounted: function () {
                 // 綁定
-                var self = this;
+                let self = this;
                 let url = '/Admin/Getlist';
+            
                 axios.get(url)
                     .then(function (res) {
                         console.log(res.data);
