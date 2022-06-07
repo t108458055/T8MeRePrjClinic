@@ -8,7 +8,6 @@
     <Folder Include="Models\Interface\" />
     <Folder Include="Models\Data\" />
     <Folder Include="Models\Utltiy\" />
-    <Folder Include="Views\Doctor\" />
   </ItemGroup>
 
   <ItemGroup>

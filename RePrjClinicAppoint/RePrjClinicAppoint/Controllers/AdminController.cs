@@ -25,40 +25,40 @@ namespace RePrjClinicAppoint.Controllers
         {
             return View();
         }
-
+        #region Create 創建資料 Method OK
         //創建帳號至資料庫
         [HttpPost]
-        public ActionResult Create([FromForm]RegViewModel model)
-        {
-            
-            if (!ModelState.IsValid)
+        public ActionResult Create([FromForm] RegViewModel model)
+        {// 使用ViewModel接取前端所傳進來之物件
+            if (!ModelState.IsValid)// 判斷與模式是否相似
             {
-                //去資料庫比對資料是否存在
+                //去資料庫比對資料是否存在,並存入至新的物件里
                 var register = _db.Doctor.Where(c => c.Account == model.Account).FirstOrDefault();
-                if (register == null)
+                if (register == null)  //資料庫里沒此資料
                 {
-                    //TODO新增資料
+                    //TODO新增資料  與entity 做連接 並新增一要存入資料庫的資料表之物件
                     _db.Doctor.Add(new Models.Entity.Doctor()
-                    {
+                    {  //將viewmodel所傳進來的參數丟入新建構的物件里
                         Account = model.Account,
                         Password = model.Password,
                         Name = model.Name,
                         gender = model.Gender,
                         Age = 18,
-                        CreateDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
+                        CreateDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")) //當前所創建日期產生
 
                     });
-                    _db.SaveChanges();
+                    _db.SaveChanges();  //做存入資料庫里
                     //return RedirectToAction("Index");
-                    return Content("已寫入至資料庫");
+                    return Content("已寫入至資料庫");// 回傳此字串
                 }
                 else
                 {
-                    return Content("此帳號已有人使用");
+                    return Content("此帳號已有人使用");// 回傳此字串
                 }
             }
-            return Content("失敗");
+            return Content("失敗");// 回傳此字串
         }
+        #endregion
 
         //TODO從資料庫拿取文件
         public List <docshowViewModel> Getlist()
@@ -73,26 +73,26 @@ namespace RePrjClinicAppoint.Controllers
             
             }).ToList();
 
-            return result;
+            return result;// 回傳此字串
         }
-
 
         //TODO 刪除資料庫的資凹
         [Route("[controller]/[action]/{id}")]
         [HttpPost]
         public  IActionResult DeleteDoc([FromRoute] int? id)
-        {
+        {// 使用Route 方法接取前端所傳進來之編號 int
+            //去資料庫比對資料是否存在,並存入至新的物件里
             var result = _db.Doctor.Where(x => x.DoctorId == id).FirstOrDefault();
-
+            //判斷是否空值
             if (result != null)
-            {
+            {  //做資料表的指定之編號做刪除
                 _db.Doctor.Remove(result);
                 _db.SaveChanges();
-                return Content("刪除成功");
+                return Content("刪除成功");// 回傳此字串
             }
             else
             {
-                return Content("失敗");
+                return Content("失敗");// 回傳此字串
             }
         }
     }

@@ -45,7 +45,7 @@ namespace RePrjClinicAppoint.Controllers
             var user = _db.Patient.Where(x => x.Account == NewUser.UserName).FirstOrDefault();
             if(user == null)
             {
-                _db.Patient.Add(new Models.Entity.Patient()
+                _db.Patient.Add(new Patient()
                 {
                     Account = NewUser.UserName,
                     Password=NewUser.UserPassword,
