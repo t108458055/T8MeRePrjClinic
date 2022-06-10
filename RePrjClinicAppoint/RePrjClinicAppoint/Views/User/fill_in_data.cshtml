@@ -55,13 +55,15 @@
     .btn2 {
         color: red;
     }
-    .red{
-        color:red;
-        font-size:20px;
-        padding-right:2rem;
+
+    .red {
+        color: red;
+        font-size: 20px;
+        padding-right: 2rem;
     }
+
     .padding-left {
-        padding-left:2rem;
+        padding-left: 2rem;
     }
 </style>
 @{
@@ -100,95 +102,214 @@
 
 
 
-        <div class="div3">
-            <button type="submit" class="btn1" v-on:click="login()">送出</button>
-            <button class="btn2" href="#">清除</button>
-        </div>
-
+    <div class="div3">
+        <button type="submit" class="btn1" v-on:click="login()">送出</button>
+        <button class="btn2">清除</button>
     </div>
 
+</div>
+
+<div id="myQuiry" class="">
+    <div>
+        <h1>
+            搜尋使用者資料
+        </h1>
+    </div>
+
+    <div>輸入使用者名稱</div>
+
+    <input v-model="item.id" v-on:blur="" />
+    <button type="submit" v-on:click="myQuiry()"></button>
+    <table>
+        <tr v-for="(item,index) of userData">
+            <td>{{item.id}}</td>
+            <td>{{item.account}}</td>
+            <td>{{item.name}}</td>
+        </tr>
+    </table>
+</div>
+???????????
+
+<div id="form2">
+    <div class="">帳號</div>
+    <div class="padding-left">
+        <input type="text" class="input1" required placeholder="點擊此處輸入帳號" v-model="user.username">
+    </div>
+
+    <div>
+        <button type="submit" class="btn1" v-on:click="login1()">送出</button>
+    </div>
+    <table>
 
 
 
+        <tr v-for="(item,index) of showData">
+            <td>{{item.id}}</td>
+            <td>{{item.account}}</td>
+            <td>{{item.name}}</td>
+        </tr>
+    </table>
 
-    <script>
+    <div>{{showData}}</div>
 
 
-        var aa = new Vue({
-            el: '#form1',
-            data: {
-                user: {
-                    username: '',
-                    userpassword: '',
-                    useremail: ''
-                },
-                text: {
-                    name: "",
-                    password: '',
-                    email:''
+</div>
+
+<script>
+
+
+    var aa = new Vue({
+        el: '#form1',
+        data: {
+            user: {
+                username: '',
+                userpassword: '',
+                useremail: ''
+            },
+            text: {
+                name: "",
+                password: '',
+                email: ''
+            }
+        },
+
+        methods: {
+
+
+
+            blurName: function () {
+                if (this.user.username == '') {
+                    this.text.name = "請輸入帳號";
+                } else {
+                    this.text.name = "";
+                }
+            },
+            blurPassword: function () {
+                if (this.user.username == '') {
+                    this.text.password = "請輸入密碼";
+                } else {
+                    this.text.password = "";
+                }
+            },
+            blurEmail: function () {
+                if (this.user.username == '') {
+                    this.text.email = "請輸入信箱";
+                } else {
+                    this.text.email = "";
                 }
             },
 
-            methods: {
-                blurName: function () {
-                    if (this.user.username == '') {
-                        this.text.name = "請輸入帳號";
-                    } else {
-                        this.text.name = "";
-                    }
-                },
-                blurPassword: function () {
-                    if (this.user.username == '') {
-                        this.text.password = "請輸入密碼";
-                    } else {
-                        this.text.password = "";
-                    }
-                },
-                blurEmail: function () {
-                    if (this.user.username == '') {
-                        this.text.email = "請輸入信箱";
-                    } else {
-                        this.text.email = "";
-                    }
-                },
 
+            login: function () {
 
-                login: function () {
-
-                    let logindata = new FormData();
-                    logindata.append('UserName', this.user.username);
-                    logindata.append('UserPassword', this.user.userpassword);
-                    logindata.append('UserEmail', this.user.useremail);
-                    if (this.user.username == "" || this.user.userpasswor == "" || this.user.useremail == "") {
-                        alert('資料未填齊全!');
-                        return
-                    }
+                let logindata = new FormData();
+                logindata.append('UserName', this.user.username);
+                logindata.append('UserPassword', this.user.userpassword);
+                logindata.append('UserEmail', this.user.useremail);
+                if (this.user.username == "" || this.user.userpasswor == "" || this.user.useremail == "") {
+                    alert('資料未填齊全!');
+                    return
+                }
 
 
 
 
-                    axios({
-                        method: 'post',
-                        url: '/User/pushUser',
-                        data: logindata,
-                        headers: { "Content-Type": 'multipart/form-data' }
+                axios({
+                    method: 'post',
+                    url: '/User/pushUser',
+                    data: logindata,
+                    headers: { "Content-Type": 'multipart/form-data' }
+                })
+                    .then(function (re) {
+                        if (re.data == "OK") {
+                            alert('傳遞成功');
+                        } else {
+                            alert("註冊失敗帳號重複");
+                        }
+                        console.log(re);
                     })
-                        .then(function (re) {
-                            if (re.data == "OK") {
-                                alert('傳遞成功');
-                            } else {
-                                alert("註冊失敗帳號重複");
-                            }
-                            console.log(re);
-                        })
-                        .catch(function (error) {
-                            alert('傳失敗啦!');
-                            console.log(error);
-                        });
+                    .catch(function (error) {
+                        alert('傳失敗啦!');
+                        console.log(error);
+                    });
+            }
+        }
+
+    });
+
+
+</script>
+
+
+<script>
+    var bb =new Vue({
+        el: '#myQuiry',
+        data() {
+            return {
+                userData: {},
+                item: {
+                    id: '',
+                    account: '',
+                    name: ''
                 }
             }
+        },
+        mounted: 
+             function () {
+                var self = this;
+                let url = '/User/GetData';
+                axios.get(url)
+                    .then(function (res) {
+                        self.userData = res.data;
+                    })
+                    .catch(function (err) { alert('搜尋失敗'); });
+            }
+        
+    });
+</script>
 
-        });
+
+<script>
 
 
-    </script>
+    var cc = new Vue({
+        el: '#form2',
+        data() {
+            return {
+                user: {
+                    username: '',
+                },
+                showData: {},
+                item: {
+                    id: '',
+                    account: '',
+                    name: ''
+                }
+            }
+        },
+        methods: {
+            login1: function () {
+                let logindata = new FormData();
+                logindata.append('myNB', this.user.username);
+                var selfa = this;
+                axios({
+                    method: 'post',
+                    url: '/User/myQ',
+                    data: logindata,
+                    headers: { "Content-Type": 'multipart/form-data' }
+                })
+                    .then(function (re) {
+                        selfa.showData = re.data;
+                        console.log(re);
+                    })
+                    .catch(function (error) {
+                        alert('傳失敗啦!');
+                        console.log(error);
+                    });
+            }
+        }
+
+    });
+
+
+</script>

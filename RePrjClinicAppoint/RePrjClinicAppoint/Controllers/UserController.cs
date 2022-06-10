@@ -27,6 +27,39 @@ namespace RePrjClinicAppoint.Controllers
             return View();
         }
 
+        //從資料庫撈回資料給前端
+        public List<QuiryModel> GetData()
+        {
+            var result = _db.Patient.Select(x => new QuiryModel
+            {
+                id= x.Account,
+                account = x.Password,
+                name = x.Email
+            }).ToList();
+            return result;
+        }
+
+        //
+        [HttpPost]
+        public string myQ(string myNB)
+        {
+
+            var result = _db.Patient.Where(x => x.Account.Contains(myNB));
+            string show =  "";
+            foreach (var x in result)
+            {
+                show += $"<p>使用者名稱:{x.Account}</p>" + "<br/>";
+                
+                show +=  $"使用者密碼:{x.Password}<br />";
+                show +=  $"使用者信箱:{x.Email}<hr>";
+                
+            }
+         
+            return show;
+
+        }
+ 
+
         [HttpPost]
 
         public IActionResult pushUser(NewUserModel NewUser)
@@ -67,6 +100,14 @@ namespace RePrjClinicAppoint.Controllers
             public string UserPassword { get; set; }
             public string UserEmail { get; set; }
         }
+
+        public class QuiryModel
+        {
+            public string id { get; set; }
+            public string account { get; set; }
+            public string name { get; set; }
+        }
+
 
 
     }
