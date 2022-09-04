@@ -5,3 +5,16 @@
 <div class="text-center">
     這是首頁
 </div>
+<button id="button" onclick="button()">顯示子畫面</button>
+<div id="myView" class="myView" style="display:none;">
+    @Html.Partial("~/Views/Home/myRoot.cshtml")
+</div>
+
+
+<script>
+    function button () {
+        //var myV = document.getElementsByClassName('myView');
+        var myV = document.getElementById('myView');
+        myV.style.display = ""
+    }
+</script>
