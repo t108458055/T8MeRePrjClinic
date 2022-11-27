@@ -25,6 +25,37 @@ namespace RePrjClinicAppoint.Controllers
         {
             return View();
         }
+
+        public class myDe
+        {
+            public string id { get; set; }
+            public string Account { get; set; }
+            public string name { get; set; }
+            public int DoctorId { get; set; }
+        }
+        //修改
+        [HttpGet]
+        public ActionResult De(myDe model)
+        {
+            var sql_D = _db.Doctor.Where(c => c.Account == model.Account).FirstOrDefault();
+            //_db.Doctor.Remove(sql_D);
+            sql_D.Name = model.name;
+            sql_D.Account = model.Account;
+
+            //sql_D.DoctorId = model.DoctorId;
+            /*
+            _db.Doctor.Add(new Models.Entity.Doctor()
+            {  //將viewmodel所傳進來的參數丟入新建構的物件里
+                Account = model.Account,
+                
+                CreateDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")) //當前所創建日期產生
+
+            });
+            */
+            _db.SaveChanges();
+            return Content("修改成功");
+        }
+
         #region Create 創建資料 Method OK
         //創建帳號至資料庫
         [HttpPost]

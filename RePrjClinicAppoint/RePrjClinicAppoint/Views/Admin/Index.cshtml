@@ -27,116 +27,185 @@
             <th>姓名</th>
             <th>動作</th>
         </tr>
-        <tr v-for="(item,index) of searchalldoclist">
+        <tr v-for="(item,index) of searchalldoclist" >
             <td>{{item.id}}</td>
             <td>{{item.account}}</td>
             <td>{{item.name}}</td>
+
             <td>
                 <button v-on:click="deletedocId(item.id,index)">刪除</button>
-                <button>修改</button>
+                <button v-on:click="update(index)">修改</button>
             </td>
+            <td>{{index}}</td>
         </tr>
     </table>
+
+
+
+    <div class="" v-for="(item,index) of searchalldoclist" :key="index">
+        <input type="text" v-model="item.id">
+        <input type="text" v-model="item.account">
+        <input type="text" v-model="item.name">
+
+
+        <button v-on:click="deletedocId(item.id,index)">刪除</button>
+        <button v-on:click="update(item.id,index)">修改</button>
+
+        <div v-model="aa">{{index}}</div>
+    </div>
+ 
+
+
 </div>
 
-<div id="">
 
+<div id="myAA">
+
+    <input v-if="myIf==0" v-model="aa"  />
+    <input v-if="myIf==0" v-model="bb"  />
+    <input v-if="myIf!=0" v-model="aa" disabled="disabled" />
+    <input v-if="myIf!=0" v-model="bb" disabled="disabled" />
+    <button v-on:click="ch();">修改</button>
 </div>
 
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
- new Vue(
-     {
-         el: '#appadmini',
-         data: {
-                 docname: '',
-                 docgender: '',
-                 docaccount: '123',
-             docpassword: '123',
-             localpageg: {
-                 name: '醫生姓名:',
-                 gender: '性別:',
-                 account: '帳號:',
-                 password: '密碼:',
-                 reging:'送出'
-             }
-         },
-         methods: {
-             add: function () {
-   
-                 let data = new FormData();
-
-                 data.append('Name', this.docname);
-                 data.append('Gender', this.docgender);
-                 data.append('Account', this.docaccount);
-                 data.append('Password', this.docpassword);
-
-                 let url = '/Admin/Create';
-                 axios.post(url, data,
-                    {
-                         headers: {
-                             'Content-Type': 'application/x-www-form-urlencoded'
-                                         }
-                     }
-                  
-                 )
-                     .then(function (response) {
-                         alert(response.data);
-                         location.reload();   //成功後重新導向
-
-                     })
-                     .catch(function (error) {
-                         console.log(error);
-                     });
-             }
-         }
-        })
-
+    let myA = new Vue({
+        el: '#myAA',
+        data: {
+            
+                myIf: 0,
+                aa: "",
+                bb: ""
+            
+        },
+        methods: {
+            ch: function ()
+            {
+                let a = this;
+                if (a.myIf == 0) {
+                    a.myIf=1;
+                    console.log(myIf);
+                    return myIf;
+                } else {
+                    a.myIf=0
+                    console.log(myIf);
+                    return myIf;
+                }
+            }
+        }
+    });
 </script>
 
-<script>
-    new Vue(
-        {
-            el: '#appres',
-            data() {
-                return {
-                    searchalldoclist: {},  //給前端呈現使用
-                    item: {
-                        id: '',
-                        account:'',
-                        name: '',
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        new Vue(
+            {
+                el: '#appadmini',
+                data: {
+                    docname: '',
+                    docgender: '',
+                    docaccount: '123',
+                    docpassword: '123',
+                    localpageg: {
+                        name: '醫生姓名:',
+                        gender: '性別:',
+                        account: '帳號:',
+                        password: '密碼:',
+                        reging: '送出'
+                    }
+                },
+                methods: {
+                    add: function () {
+
+                        let data = new FormData();
+
+                        data.append('Name', this.docname);
+                        data.append('Gender', this.docgender);
+                        data.append('Account', this.docaccount);
+                        data.append('Password', this.docpassword);
+
+                        let url = '/Admin/Create';
+                        axios.post(url, data,
+                            {
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                }
+                            }
+
+                        )
+                            .then(function (response) {
+                                alert(response.data);
+                                location.reload();   //成功後重新導向
+
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
                     }
                 }
-            },
-            methods: {
-                deletedocId: function (id) {
+            })
 
-                    //   let url = '/Admin/DeleteDoc/id?='+id;
-                    ///*   let data = id;*/
-                    //   console.log(id);
-                    //   console.log(typeof (id));
+    </script>
 
-                    axios.post('/Admin/DeleteDoc/' + id)
+    <script>
+       var myVue= new Vue(
+            {
+                el: '#appres',
+                data() {
+                    return {
+                        aa:"",
+                        searchalldoclist: {},  //給前端呈現使用
+                        item: {
+                            id: '',
+                            account: '',
+                            name: '',
+                            index:''
+                        }
+                    }
+                },
+                methods: {
+                    deletedocId: function (id) {
+
+                        //   let url = '/Admin/DeleteDoc/id?='+id;
+                        ///*   let data = id;*/
+                        //   console.log(id);
+                        //   console.log(typeof (id));
+
+                        axios.post('/Admin/DeleteDoc/' + id)
+                            .then(function (res) {
+                                console.log('痘痘');
+                                alert(res.data);
+                                location.reload();
+                            })
+                            .catch(function (err) { console.log(err); });
+                    }
+                    , update: function (id,index) {
+                        //let index = this.searchalldoclist.id;
+                console.log("id=" + id);
+     
+                        console.log("index=" + index);
+                        console.log("有觸發");
+                        axios.get('/Admin/De', { params: { id: this.searchalldoclist[index].id, name: this.searchalldoclist[index].name, account: this.searchalldoclist[index].account } } )
+                            .then(function (res) {
+                                alert(res.data);
+                                location.reload();
+                            })
+                            .catch(function (err) { console.log(err); });
+                    }
+                },
+                mounted: function () {
+                    // 綁定
+                    var self = this;
+                    let url = '/Admin/Getlist';
+                    axios.get(url)
                         .then(function (res) {
-                            console.log('痘痘');
-                            alert(res.data);
-                            location.reload();
+                            console.log(res.data);
+                            self.searchalldoclist = res.data; //把傳回之資料庫的資料置入前端呈現
+
                         })
                         .catch(function (err) { console.log(err); });
                 }
-            },
-            mounted: function () {
-                // 綁定
-                var self = this;
-                let url = '/Admin/Getlist';
-                axios.get(url)
-                    .then(function (res) {
-                        console.log(res.data);
-                        self.searchalldoclist=res.data; //把傳回之資料庫的資料置入前端呈現
+            })
 
-                    })
-                    .catch(function (err) { console.log(err); });
-            }
-        })
-
-</script>
+    </script>
