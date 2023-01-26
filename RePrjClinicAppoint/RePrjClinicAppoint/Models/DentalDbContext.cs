@@ -14,10 +14,12 @@ namespace RePrjClinicAppoint.Models
         {
 
         }
+        public DbSet<User> User { get; set; }
         public DbSet<Doctor> Doctor { get; set; }
         public DbSet<Patient> Patient { get; set; }
         public DbSet<Appointment> Appointment { get; set; }
-        public DbSet<Details> Details { get; set; }
+        public DbSet<Details> Detail { get; set; }
+        public DbSet<LoginLogger> LoginLogger { get; set; }
 
     
     }

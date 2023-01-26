@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RePrjClinicAppoint.Models;
 
@@ -11,9 +12,10 @@ using RePrjClinicAppoint.Models;
 namespace RePrjClinicAppoint.Migrations
 {
     [DbContext(typeof(DentalDbContext))]
-    partial class DentalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230126083024_reDesignAddAbstract")]
+    partial class reDesignAddAbstract
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,16 +32,31 @@ namespace RePrjClinicAppoint.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime?>("CancelDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("DoctorId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<string>("appointService")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("cancelDate")
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("creater")
@@ -48,14 +65,8 @@ namespace RePrjClinicAppoint.Migrations
                     b.Property<DateTime?>("creationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("endDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("isFinish")
-                        .HasColumnType("bit");
+                    b.Property<int>("dental")
+                        .HasColumnType("int");
 
                     b.Property<bool>("isRemoved")
                         .HasColumnType("bit");
@@ -65,12 +76,6 @@ namespace RePrjClinicAppoint.Migrations
 
                     b.Property<string>("modifier")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("serviceStatus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("startDate")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -92,17 +97,23 @@ namespace RePrjClinicAppoint.Migrations
                     b.Property<int?>("AppointmentId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
                     b.Property<string>("creater")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("creationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isFinishStatus")
-                        .HasColumnType("bit");
+                    b.Property<int>("dental")
+                        .HasColumnType("int");
 
                     b.Property<bool>("isRemoved")
                         .HasColumnType("bit");
@@ -113,14 +124,11 @@ namespace RePrjClinicAppoint.Migrations
                     b.Property<string>("modifier")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("price")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AppointmentId");
 
-                    b.ToTable("Detail");
+                    b.ToTable("Details");
                 });
 
             modelBuilder.Entity("RePrjClinicAppoint.Models.Entity.Doctor", b =>
@@ -131,17 +139,29 @@ namespace RePrjClinicAppoint.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Account")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsConfirm")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("account")
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("age")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("creater")
                         .HasColumnType("nvarchar(max)");
@@ -149,11 +169,8 @@ namespace RePrjClinicAppoint.Migrations
                     b.Property<DateTime?>("creationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("gender")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("gender")
+                        .HasColumnType("int");
 
                     b.Property<bool>("isRemoved")
                         .HasColumnType("bit");
@@ -162,15 +179,6 @@ namespace RePrjClinicAppoint.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("modifier")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("phone")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -214,7 +222,7 @@ namespace RePrjClinicAppoint.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LoginLogger");
+                    b.ToTable("LoginLoggers");
                 });
 
             modelBuilder.Entity("RePrjClinicAppoint.Models.Entity.Patient", b =>
@@ -225,17 +233,41 @@ namespace RePrjClinicAppoint.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Account")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsConfirm")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("account")
+                    b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("age")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsMailConfirm")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPhoneConfirm")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("creater")
                         .HasColumnType("nvarchar(max)");
@@ -243,11 +275,8 @@ namespace RePrjClinicAppoint.Migrations
                     b.Property<DateTime?>("creationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("gender")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("gender")
+                        .HasColumnType("int");
 
                     b.Property<bool>("isRemoved")
                         .HasColumnType("bit");
@@ -256,78 +285,11 @@ namespace RePrjClinicAppoint.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("modifier")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("phone")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Patient");
-                });
-
-            modelBuilder.Entity("RePrjClinicAppoint.Models.Entity.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsConfirm")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("account")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("creater")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("creationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("gender")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isRemoved")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("modifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("modifier")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("userRole")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("RePrjClinicAppoint.Models.Entity.Appointment", b =>

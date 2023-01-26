@@ -1,4 +1,4 @@
-﻿using RePrjClinicAppoint.Models.Enum;
+﻿using RePrjClinicAppoint.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

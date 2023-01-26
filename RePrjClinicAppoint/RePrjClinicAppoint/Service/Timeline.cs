@@ -33,9 +33,9 @@ namespace RePrjClinicAppoint.Service
                         var slotEnd = slotStart.AddMinutes(SlotDurationMiuntes);
 
                         var slot = new Appointment();
-                        slot.StartDate = slotStart;
-                        slot.EndDate = slotEnd;
-                        slot.Status = true;
+                        slot.startDate = slotStart;
+                        slot.endDate = slotEnd;
+                        slot.isFinish = true;
 
                         result.Add(slot);
                     }

@@ -28,32 +28,32 @@ namespace RePrjClinicAppoint.Controllers
         }
 
         //從資料庫撈回資料給前端
-        public List<QuiryModel> GetData()
-        {
-            var result = _db.Patient.Select(x => new QuiryModel
-            {
-                id= x.Account,
-                account = x.Password,
-                name = x.Email
-            }).ToList();
-            return result;
-        }
+        //public List<QuiryModel> GetData()
+        //{
+        //    //var result = _db.Patient.Select(x => new QuiryModel
+        //    //{
+        //    //    id= x.Account,
+        //    //    account = x.Password,
+        //    //    name = x.Email
+        //    //}).ToList();
+        //    return result;
+        //}
 
         //
         [HttpPost]
         public string myQ(string myNB)
         {
 
-            var result = _db.Patient.Where(x => x.Account.Contains(myNB));
+            //var result = _db.Patient.Where(x => x.Account.Contains(myNB));
             string show =  "";
-            foreach (var x in result)
-            {
-                show += $"<p>使用者名稱:{x.Account}</p>" + "<br/>";
+            //foreach (var x in result)
+            //{
+            //    show += $"<p>使用者名稱:{x.Account}</p>" + "<br/>";
                 
-                show +=  $"使用者密碼:{x.Password}<br />";
-                show +=  $"使用者信箱:{x.Email}<hr>";
+            //    show +=  $"使用者密碼:{x.Password}<br />";
+            //    show +=  $"使用者信箱:{x.Email}<hr>";
                 
-            }
+            //}
          
             return show;
 
@@ -73,18 +73,18 @@ namespace RePrjClinicAppoint.Controllers
             //ToDO 新增資料
 
             //}
-            
 
-            var user = _db.Patient.Where(x => x.Account == NewUser.UserName).FirstOrDefault();
-            if(user == null)
+            var user = "dd";
+            //var user = _db.Patient.Where(x => x.Account == NewUser.UserName).FirstOrDefault();
+            if (user == null)
             {
-                _db.Patient.Add(new Patient()
-                {
-                    Account = NewUser.UserName,
-                    Password=NewUser.UserPassword,
-                    Email=NewUser.UserEmail
-                });
-                _db.SaveChanges();
+                //    _db.Patient.Add(new Patient()
+                //    {
+                //        Account = NewUser.UserName,
+                //        Password=NewUser.UserPassword,
+                //        Email=NewUser.UserEmail
+                //    });
+                //    _db.SaveChanges();
                 return Content("OK");
             }
             else

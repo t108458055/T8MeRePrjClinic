@@ -1,25 +1,24 @@
-﻿using RePrjClinicAppoint.Models.Enum;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace RePrjClinicAppoint.Models.Entity
-{  //完成服務明細
-    public class Details
+{ 
+    /// <summary>
+    /// 完成明細
+    /// </summary>
+    public class Details: DentalEntityAbstract
     {
-        public int Id { get; set; }
-
+        //FK
         public virtual Appointment Appointment { get; set; }
-        //成立服務
-        
-        public Dental dental { get; set; }
         //檢查描述
-        public string Description { get; set; }
+        public string description { get; set; }
         //服務費用
-        public int Price { get; set; }
-        //建立日期
-        public DateTime CreateDate { get; set; }
-
+        [Column(TypeName = "decimal(18,2)")]
+        public Decimal price { get; set; }
+        //狀態完成
+        [Required]
+        public bool isFinishStatus { get; set; }
     }
 }
