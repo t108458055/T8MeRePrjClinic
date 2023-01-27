@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "vue@3.2.45",
+      "destination": "wwwroot//lib/vue/"
+    }
+  ,
+{
+  "provider": "cdnjs",
+  "library": "vue@3.2.45",
+  "destination": "wwwroot/lib/vue/"
+}
+,
+{
+  "provider": "cdnjs",
+  "library": "vuetify@3.1.2",
+  "destination": "wwwroot/lib/vuetify/"
+}
+]
+}

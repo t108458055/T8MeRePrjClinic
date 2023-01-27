@@ -5,37 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - 診所預約系統</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <!-- Add src axios js
-    <script src="~/js/axios.min.js"></script>-->
+    <link rel="stylesheet" href="~/css/site.css" />  
+    <link rel="stylesheet" href="~/lib/jquery-ui-1.13.2/jquery-ui.css" />
+    <link rel="stylesheet" href="~/lib/fullcalendar/main.min.css" />
+    <link rel="stylesheet" href="~/lib/vuetify/vuetify.css" />
+    <!-- Add src axios js-->
+    <script src="~/js/axios.min.js"></script>
     <!-- Add src Vue 2.6.11 js-->
-    <script src="~/js/vue.js"></script>
-    <script src="~/js/vue.min.js"></script>
-
-
-
-
-
-
-
-    <!--jq-->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js'
+@*    <script src="~/js/vue.min.js"></script>*@
+    <!-- Add src Vue 3.2.4 js-->
+    <script src="~/lib/vue/vue.global.min.js"></script>
+    <script src="~/lib/vuetify/vuetify.min.js"></script>
+    <!--Add jQuery -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+ @*   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js'
             integrity='sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=='
             crossorigin='anonymous'></script>
-
     <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.9.1/axios.js' integrity='sha512-Kg0CewqPNO/ziOJuCq5eyl3P/V6OLz/Lb1I2m+yKS3lHZcGVFN/KOew18rWP+kTsL7haYdaqGjwHQCZrN0heLQ==' crossorigin='anonymous'></script>
-
-
-
-
-
-
-
-
+*@
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+<header>
+         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                 診所預約系統
@@ -80,7 +71,7 @@
                 </div>
             </div>
         </nav>
-    </header>
+</header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -92,7 +83,8 @@
             &copy; 2022 - 小型預約系統練習 - <a asp-area="" asp-controller="Home" asp-action="Privacy">隱私</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/jquery-ui-1.13.2/jquery-ui.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

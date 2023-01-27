@@ -67,21 +67,21 @@ namespace RePrjClinicAppoint.Controllers
                 //var register = _db.Doctor.Where(c => c.Account == model.Account).FirstOrDefault();
                 if (!true)  //資料庫里沒此資料
                 {
-                    //TODO新增資料  與entity 做連接 並新增一要存入資料庫的資料表之物件
-                    _db.Doctor.Add(new Models.Entity.Doctor()
-                    {  //將viewmodel所傳進來的參數丟入新建構的物件里
-                        account = model.Account,
-                        password = model.Password,
-                        name = model.Name,
-                     //   gender = model.Gender,
-                        age = 18,
-                        creationDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")) //當前所創建日期產生
+                    //    //TODO新增資料  與entity 做連接 並新增一要存入資料庫的資料表之物件
+                    //_db.Doctor.Add(new Models.Entity.Doctor()
+                    //{  //將viewmodel所傳進來的參數丟入新建構的物件里
+                    //    account = model.Account,
+                    //    password = model.Password,
+                    //    name = model.Name,
+                    // //   gender = model.Gender,
+                    //    age = 18,
+                    //    creationDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")) //當前所創建日期產生
 
-                    });
-                    _db.SaveChanges();  //做存入資料庫里
-                    return RedirectToAction("Index");
+                    //});
+                    //_db.SaveChanges();  //做存入資料庫里
+                    //  return RedirectToAction("Index");
                     return Content("已寫入至資料庫");// 回傳此字串
-                }
+               }
                 else
                 {
                     return Content("此帳號已有人使用");// 回傳此字串

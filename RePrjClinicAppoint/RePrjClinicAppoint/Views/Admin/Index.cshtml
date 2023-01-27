@@ -1,211 +1,295 @@
 ﻿@{ 
     ViewData["Title"] = "管理者頁面";
 }
+<style type="text/css">
+    #draggable {
+        width: 200px;
+        box-shadow: 0 0 5px 0 gray;
+        text-align: center;
+        padding: 50px 0px;
+    }
 
+    #resizable {
+        width: 200px;
+        height: 150px;
+        padding: 5px;
+    }
 
-<div id="appadmini">
-    <fieldset>
+    #resizable h3 {
+        text-align: center;
+        margin: 0;
+    }
+</style>
+    <script type="text/javascript">
+        ////透過jQuery Selector 選擇文件之物件
+        //$(document).ready(
+        //    //網頁初始化事件程序
+        //    function() {
+        //        //選擇對話盒面板
+        //        $('#panel').hide();
+        //    }
+        //);
+    </script>
 
-        {{localpageg.name}}
-        <input type="text" v-model="docname" />
-        {{localpageg.gender}}
-        <input type="text" v-model="docgender" />
-        {{localpageg.account}}
-        <input type="text" v-model="docaccount" />
-        {{localpageg.password}}
-        <input type="text" v-model="docpassword" />
-  
-    </fieldset>
-    <button v-on:click="add()"> {{localpageg.reging}}</button>
-</div>
-<hr />
-<div id="appres">
-    <table class="table-bordered">
-        <tr>
-            <th>Id</th>
-            <th>帳號</th>
-            <th>姓名</th>
-            <th>動作</th>
-        </tr>
-        <tr v-for="(item,index) of searchalldoclist" >
-            <td>{{item.id}}</td>
-            <td>{{item.account}}</td>
-            <td>{{item.name}}</td>
+<div id="appadmin">
 
-            <td>
-                <button v-on:click="deletedocId(item.id,index)">刪除</button>
-                <button v-on:click="update(index)">修改</button>
-            </td>
-            <td>{{index}}</td>
-        </tr>
+    <draggable-widget></draggable-widget>
+    <a>{{message}}</a>
+    <first-component></first-component> 
+  <!--====================================== -->
+    <v-container fluid>
+        <v-row class="grey" align-md="left">
+            <v-dialog v-model="dialog" persistent>
+                <template v-slot:activator="{ props }">
+                    <v-btn color="primary" v-bind="props">
+                        新增
+                    </v-btn>
+                </template>
+                <v-card>
+                    <v-card-title>
+                        <span class="text-h5">新增帳號</span>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-container>
+                            <v-row>
+                                <v-col cols="12" sm="6" md="4">
+                                    <v-text-field label="帳號*" v-model="account.name"
+                                                  required></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="4">
+                                    <v-text-field label="姓名" v-model="account.name"
+                                                  hint="example of helper text only on focus"></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="4">
+                                    <v-text-field label="性別*" v-model="account.gender"
+                                                  hint="example of persistent helper text"
+                                                  persistent-hint
+                                                  required></v-text-field>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-text-field label="Email*" v-model="account.accountId"
+                                                  required></v-text-field>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-text-field label="Password*"
+                                                  type="password" v-model="account.password"
+                                                  required></v-text-field>
+                                </v-col>
+                                <v-col cols="12"
+                                       sm="6">
+                                    <v-select :items="['0-17', '18-29', '30-54', '54+']"
+                                              label="年齡*"
+                                              required></v-select>
+                                </v-col>
+                                <v-col cols="12"
+                                       sm="6">
+                                    <v-autocomplete :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
+                                                    label="技能"
+                                                    multiple></v-autocomplete>
+                                </v-col>
+                            </v-row>
+                        </v-container>
+                        <small>*必填選項</small>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue-darken-1"
+                               variant="text"
+                               @@click="dialog = false">
+                            關閉
+                        </v-btn>
+                        <v-btn color="blue-darken-1"
+                               variant="text" v-on:click="add()">
+                            儲存
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+        </v-row>
+    </v-container>
+    <!--dwsdsDSD-->
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">帳號</th>
+                <th scope="col">姓名</th>
+                <th scope="col">動作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="(item,index) of searchalldoclist">
+                <th scope="row">{{item.id}}</th>
+                <td>{{item.account}}</td>
+                <td>{{item.name}}</td>
+                <td>
+                    <button v-on:click="deletedocId(item.id,index)">刪除</button>
+                    <button v-on:click="update(index)">修改</button>
+                </td>
+                <td>{{index}}</td>
+            </tr>
+        </tbody>
     </table>
-
-
-
     <div class="" v-for="(item,index) of searchalldoclist" :key="index">
         <input type="text" v-model="item.id">
         <input type="text" v-model="item.account">
         <input type="text" v-model="item.name">
-
-
         <button v-on:click="deletedocId(item.id,index)">刪除</button>
         <button v-on:click="update(item.id,index)">修改</button>
-
         <div v-model="aa">{{index}}</div>
     </div>
- 
 
-
-</div>
-
-
-<div id="myAA">
-
-    <input v-if="myIf==0" v-model="aa"  />
-    <input v-if="myIf==0" v-model="bb"  />
+    <input v-if="myIf==0" v-model="aa" />
+    <input v-if="myIf==0" v-model="bb" />
     <input v-if="myIf!=0" v-model="aa" disabled="disabled" />
     <input v-if="myIf!=0" v-model="bb" disabled="disabled" />
     <button v-on:click="ch();">修改</button>
+
 </div>
 
-<script>
-    let myA = new Vue({
-        el: '#myAA',
-        data: {
-            
-                myIf: 0,
-                aa: "",
-                bb: ""
-            
-        },
-        methods: {
-            ch: function ()
-            {
-                let a = this;
-                if (a.myIf == 0) {
-                    a.myIf=1;
-                    console.log(myIf);
-                    return myIf;
-                } else {
-                    a.myIf=0
-                    console.log(myIf);
-                    return myIf;
-                }
-            }
-        }
-    });
-</script>
 
+<template id="draggable-widget">
+    <div id="draggable">
+        DRAG ME!
+    </div>
+</template>
 
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        new Vue(
-            {
-                el: '#appadmini',
-                data: {
-                    docname: '',
-                    docgender: '',
-                    docaccount: '123',
-                    docpassword: '123',
-                    localpageg: {
+@section Scripts{
+<script type="text/javascript">
+        //
+    const vuetify = Vuetify.createVuetify()
+    const adminpage = Vue.createApp({
+        //Data Manager  
+        data(){
+            return{
+                    myIf: 0,
+                    aa: "",
+                    bb: "",
+                message: 'HelloVue3',
+                account:{
+                    name:'',
+                    gender:'',
+                    accountId:'123',
+                    password:'123456'
+                    }, aa: "",
+                    searchalldoclist: {},  //給前端呈現使用
+                    item: {
+                        id: '',
+                        account: '',
+                        name: '',
+                        index: ''
+                    },
+                renderText: {
                         name: '醫生姓名:',
                         gender: '性別:',
                         account: '帳號:',
                         password: '密碼:',
                         reging: '送出'
+                    },
+                      dialog: false,
+            }
+        },
+        components:{
+        'first-component': {
+          template: `
+          <div>  //最上層只能有一個tag，Vue單節點特性
+            <div>A custom component of Vue!</div>
+            <hr>
+            <div>A custom component of Vue!</div>
+          </div>`
+        },
+        'draggable-widget':{
+                    template: '#draggable-widget',
+
+                    ready: function () {
+                      //  $(this.$'#appadmin').draggable();
                     }
-                },
-                methods: {
-                    add: function () {
-
+            }
+        }, 
+        //Method Manager
+        methods:{
+                add: function () {
+                    try {
+                       
                         let data = new FormData();
-
-                        data.append('Name', this.docname);
-                        data.append('Gender', this.docgender);
-                        data.append('Account', this.docaccount);
-                        data.append('Password', this.docpassword);
-
-                        let url = '/Admin/Create';
-                        axios.post(url, data,
-                            {
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded'
-                                }
+                        data.append('Name', this.account.name);
+                        data.append('Gender', this.account.gender);
+                        data.append('Account', this.account.accountId);
+                        data.append('Password', this.account.password);
+                         let url = '/Admin/Create';
+                   axios.post(url, data, {
+                            headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
                             }
+                            }).then(function (response) {
+                            alert(response.data);
+                            location.reload();   //成功後重新導向
 
-                        )
-                            .then(function (response) {
-                                alert(response.data);
-                                location.reload();   //成功後重新導向
-
-                            })
-                            .catch(function (error) {
+                            }).catch(function (error) {
                                 console.log(error);
-                            });
+                         });
+                    } catch (error) {
+                        console.error(error);
+                    }                
+                   
+                },
+                deletedocId: function (id) {
+                    //   let url = '/Admin/DeleteDoc/id?='+id;
+                    ///*   let data = id;*/
+                    //   console.log(id);
+                    //   console.log(typeof (id));
+                    axios.post('/Admin/DeleteDoc/' + id)
+                        .then(function (res) {
+                            console.log('痘痘');
+                            alert(res.data);
+                            location.reload();
+                        })
+                        .catch(function (err) { console.log(err); });
+                },
+                update: function (id, index) {
+                    //let index = this.searchalldoclist.id;
+                    console.log("id=" + id);
+                    console.log("index=" + index);
+                    console.log("有觸發");
+                    axios.get('/Admin/De', { params: { id: this.searchalldoclist[index].id, name: this.searchalldoclist[index].name, account: this.searchalldoclist[index].account } })
+                        .then(function (res) {
+                            alert(res.data);
+                            location.reload();
+                        })
+                        .catch(function (err) { console.log(err); });
+                },
+                ch: function () {
+                    let a = this;
+                    if (a.myIf == 0) {
+                        a.myIf = 1;
+                        console.log(myIf);
+                        return myIf;
+                    } else {
+                        a.myIf = 0
+                        console.log(myIf);
+                        return myIf;
                     }
                 }
-            })
-
-    </script>
-
-    <script>
-       var myVue= new Vue(
-            {
-                el: '#appres',
-                data() {
-                    return {
-                        aa:"",
-                        searchalldoclist: {},  //給前端呈現使用
-                        item: {
-                            id: '',
-                            account: '',
-                            name: '',
-                            index:''
-                        }
-                    }
-                },
-                methods: {
-                    deletedocId: function (id) {
-
-                        //   let url = '/Admin/DeleteDoc/id?='+id;
-                        ///*   let data = id;*/
-                        //   console.log(id);
-                        //   console.log(typeof (id));
-
-                        axios.post('/Admin/DeleteDoc/' + id)
-                            .then(function (res) {
-                                console.log('痘痘');
-                                alert(res.data);
-                                location.reload();
-                            })
-                            .catch(function (err) { console.log(err); });
-                    }
-                    , update: function (id,index) {
-                        //let index = this.searchalldoclist.id;
-                console.log("id=" + id);
-     
-                        console.log("index=" + index);
-                        console.log("有觸發");
-                        axios.get('/Admin/De', { params: { id: this.searchalldoclist[index].id, name: this.searchalldoclist[index].name, account: this.searchalldoclist[index].account } } )
-                            .then(function (res) {
-                                alert(res.data);
-                                location.reload();
-                            })
-                            .catch(function (err) { console.log(err); });
-                    }
-                },
-                mounted: function () {
-                    // 綁定
+        },
+        // Computed Manager
+        computed:{
+        
+        },
+        // Watch
+        watch:{
+             
+        },
+        mounted (){
+                console.log('mounted');
+                      // 綁定
                     var self = this;
                     let url = '/Admin/Getlist';
                     axios.get(url)
                         .then(function (res) {
                             console.log(res.data);
                             self.searchalldoclist = res.data; //把傳回之資料庫的資料置入前端呈現
-
-                        })
-                        .catch(function (err) { console.log(err); });
-                }
-            })
-
-    </script>
+                        }).catch(function (err) { console.log(err); });
+         }      
+     }).use(vuetify).mount('#appadmin');
+</script>
+}

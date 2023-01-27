@@ -28,33 +28,33 @@ namespace RePrjClinicAppoint.Controllers
         }
 
         //從資料庫撈回資料給前端
-        //public List<QuiryModel> GetData()
-        //{
-        //    //var result = _db.Patient.Select(x => new QuiryModel
-        //    //{
-        //    //    id= x.Account,
-        //    //    account = x.Password,
-        //    //    name = x.Email
-        //    //}).ToList();
-        //    return result;
-        //}
+        public List<QuiryModel> GetData()
+        {
+            var result = _db.Patient.Select(x => new QuiryModel
+            {
+                id = x.Id,
+                account = x.account,
+                name = x.name
+            }).ToList();
+            return result;
+        }
 
         //
         [HttpPost]
         public string myQ(string myNB)
         {
 
-            //var result = _db.Patient.Where(x => x.Account.Contains(myNB));
+            var result = _db.Patient.Where(x => x.name.Contains(myNB));
             string show =  "";
-            //foreach (var x in result)
-            //{
-            //    show += $"<p>使用者名稱:{x.Account}</p>" + "<br/>";
-                
-            //    show +=  $"使用者密碼:{x.Password}<br />";
-            //    show +=  $"使用者信箱:{x.Email}<hr>";
-                
-            //}
-         
+            foreach (var x in result)
+            {
+                show += $"<p>使用者名稱:{x.name}</p>" + "<br/>";
+
+                show += $"使用者密碼:{x.password}<br />";
+                show += $"使用者信箱:{x.email}<hr>";
+
+            }
+
             return show;
 
         }
@@ -64,27 +64,27 @@ namespace RePrjClinicAppoint.Controllers
 
         public IActionResult pushUser(NewUserModel NewUser)
         {
-            //var YA = NewUser;
-            //Console.WriteLine(YA);
+            var YA = NewUser;
+            Console.WriteLine(YA);
             //去跟資料庫比對資料是否存在
-            //var pushYa = _db.Patient.Where(c => c.Email == NewUser.UserEmail).DefaultIfEmpty().FirstOrDefault();
-            //if (pushYa==null)
-            //{
-            //ToDO 新增資料
+            var pushYa = _db.Patient.Where(c => c.email == NewUser.UserEmail).DefaultIfEmpty().FirstOrDefault();
+            if (pushYa == null)
+            {
+           //     ToDO 新增資料
 
-            //}
+            }
 
-            var user = "dd";
-            //var user = _db.Patient.Where(x => x.Account == NewUser.UserName).FirstOrDefault();
+
+            var user = _db.Patient.Where(x => x.account == NewUser.UserName).FirstOrDefault();
             if (user == null)
             {
-                //    _db.Patient.Add(new Patient()
-                //    {
-                //        Account = NewUser.UserName,
-                //        Password=NewUser.UserPassword,
-                //        Email=NewUser.UserEmail
-                //    });
-                //    _db.SaveChanges();
+                _db.Patient.Add(new Patient()
+                {
+                    account = NewUser.UserName,
+                    password = NewUser.UserPassword,
+                    email = NewUser.UserEmail
+                });
+                _db.SaveChanges();
                 return Content("OK");
             }
             else
@@ -103,7 +103,7 @@ namespace RePrjClinicAppoint.Controllers
 
         public class QuiryModel
         {
-            public string id { get; set; }
+            public int id { get; set; }
             public string account { get; set; }
             public string name { get; set; }
         }
