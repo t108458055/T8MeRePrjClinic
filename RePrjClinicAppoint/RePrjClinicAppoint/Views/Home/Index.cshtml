@@ -227,7 +227,12 @@ $( function() {
     function button () {
         //var myV = document.getElementsByClassName('myView');
         var myV = document.getElementById('myView');
-        myV.style.display = ""
+        if (myV.style.display === "none") {
+            myV.style.display = ""
+        }else{
+            myV.style.display = "none";
+        }      
+       
     }
 </script>
 
