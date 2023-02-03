@@ -111,26 +111,31 @@
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">Id</th>
-                <th scope="col">帳號</th>
-                <th scope="col">姓名</th>
-                <th scope="col">動作</th>
+                <th scope="col" width="10%">Id</th>
+                <th scope="col" width="20%">動作</th>
+                <th scope="col" width="30%">帳號</th>
+                <th scope="col" width="30%">姓名</th>
+                <th scope="col" width="10%">目錄</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="(item,index) of searchalldoclist">
                 <th scope="row">{{item.id}}</th>
+                <td>
+                    <v-row>
+                        <v-btn x-small color="red" v-on:click="deletedocId(item.id,index)">刪除</v-btn>
+                        <v-btn x-small color="blue" v-on:click="update(index)">修改</v-btn>
+                    </v-row>
+
+                </td>
                 <td>{{item.account}}</td>
                 <td>{{item.name}}</td>
-                <td>
-                    <button v-on:click="deletedocId(item.id,index)">刪除</button>
-                    <button v-on:click="update(index)">修改</button>
-                </td>
+
                 <td>{{index}}</td>
             </tr>
         </tbody>
     </table>
-    <div class="" v-for="(item,index) of searchalldoclist" :key="index">
+@*    <div class="" v-for="(item,index) of searchalldoclist" :key="index">
         <input type="text" v-model="item.id">
         <input type="text" v-model="item.account">
         <input type="text" v-model="item.name">
@@ -144,7 +149,7 @@
     <input v-if="myIf!=0" v-model="aa" disabled="disabled" />
     <input v-if="myIf!=0" v-model="bb" disabled="disabled" />
     <button v-on:click="ch();">修改</button>
-
+*@
 </div>
 
 
