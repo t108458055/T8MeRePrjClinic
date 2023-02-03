@@ -22,14 +22,58 @@
 </style>
     <script type="text/javascript">
         ////透過jQuery Selector 選擇文件之物件
-        //$(document).ready(
-        //    //網頁初始化事件程序
-        //    function() {
-        //        //選擇對話盒面板
-        //        $('#panel').hide();
-        //    }
-        //);
+        $(document).ready(
+            //網頁初始化事件程序
+            function() {
+                //選擇對話盒面板
+            $('#dialog-form').hide();
+            var button = $('#create-user'); // 他是一個物件 使用typeof可以知道他是什麼東東
+            button.click(
+                () => { dialogOpen() }
+            
+            
+            );
+            }
+        );
+
+
+        function dialogOpen(){
+          
+
+      $( "#dialog-form" ).dialog({
+             modal: true,
+              height: 400,
+              width: 350,     
+              buttons: {        
+                Cancel: function() {
+                    $("#dialog-form").dialog("close");
+                }
+              },
+              close: function() {
+                console.log('sd');
+              }
+    });
+
+
+     
+        }
     </script>
+
+
+<button id="create-user">觸發...</button>
+<div id="dialog" title="Basic dialog">
+    <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the &apos;x&apos; icon.</p>
+</div>
+
+<div id="dialog-form" title="Create new user">
+    <p class="validateTips">All form fields are required.</p>
+        <div><a>客戶編號</a></div>
+    <input type="text" readonly />
+    <div><a>公司行號</a></div>
+    <input type="text" readonly />
+</div>
+
+
 
 <div id="appadmin">
 
@@ -39,10 +83,15 @@
   <!--====================================== -->
     <v-container fluid>
         <v-row class="grey" align-md="left">
-            <v-dialog v-model="dialog" persistent>
-                <template v-slot:activator="{ props }">
-                    <v-btn color="primary" v-bind="props">
-                        新增
+            <v-dialog 
+        max-width="600px"
+       v-model="dialog" persistent>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn color="primary"
+                           dark
+                           v-bind="attrs"
+                           v-on="on">
+                          新增
                     </v-btn>
                 </template>
                 <v-card>
@@ -124,9 +173,9 @@
                 <td>
                     <v-row>
                         <v-btn x-small color="red" v-on:click="deletedocId(item.id,index)">刪除</v-btn>
-                        <v-btn x-small color="blue" v-on:click="update(index)">修改</v-btn>
+                        <v-btn x-small color="blue" v-on:click="update(item.id,item)">修改</v-btn>
+                        <v-btn x-small color="dark" v-on:click="dialog = true">巴巴</v-btn>
                     </v-row>
-
                 </td>
                 <td>{{item.account}}</td>
                 <td>{{item.name}}</td>
@@ -204,8 +253,8 @@
           </div>`
         },
         'draggable-widget':{
+                    props: ['name'],
                     template: '#draggable-widget',
-
                     ready: function () {
                       //  $(this.$'#appadmin').draggable();
                     }
@@ -255,13 +304,16 @@
                     //let index = this.searchalldoclist.id;
                     console.log("id=" + id);
                     console.log("index=" + index);
+                    let pp=JSON.stringify(index);
+                    console.log('json'+pp);
                     console.log("有觸發");
-                    axios.get('/Admin/De', { params: { id: this.searchalldoclist[index].id, name: this.searchalldoclist[index].name, account: this.searchalldoclist[index].account } })
-                        .then(function (res) {
-                            alert(res.data);
-                            location.reload();
-                        })
-                        .catch(function (err) { console.log(err); });
+                    //axios.get('/Admin/De', { params: { id: this.searchalldoclist[index].id, name: this.searchalldoclist[index].name, account: this.searchalldoclist[index].account } })
+                    //    .then(function (res) {
+                    //        alert(res.data);
+                    //        location.reload();
+                    //    })
+                    //    .catch(function (err) { console.log(err); }
+                    //    );
                 },
                 ch: function () {
                     let a = this;

@@ -1,214 +1,154 @@
-﻿
-<div id="app">
-    <div>
-        <p>
-            {{ fname }}
-        </p>
-        <v-data-table v-bind:headers="headers" :items="items" class="elevation-1" v-model="selected">
-            <template slot="items" scope="props">
-                <tr @@click="showAlert(props.item)">
-                    <td>{{ props.item.name }}</td>
-                    <td class="text-xs-right">{{ props.item.calories }}</td>
-                    <td class="text-xs-right">{{ props.item.fat }}</td>
-                    <td class="text-xs-right">{{ props.item.carbs }}</td>
-                    <td class="text-xs-right">{{ props.item.protein }}</td>
-                    <td class="text-xs-right">{{ props.item.sodium }}</td>
-                    <td class="text-xs-right">{{ props.item.calcium }}</td>
-                    <td class="text-xs-right">
-                        <v-btn slot="activator"
-                               small
-                               fab
-                               color="success"
-                               @@click="dialog=true">
-                            <v-icon>edit</v-icon>
-                        </v-btn>
+﻿@*    
+<div id="app3">
 
-                    </td>
-                </tr>
-            </template>
-        </v-data-table>
-        <v-layout row justify-center>
-            <v-dialog v-model="dialog" persistent max-width="600px" lazy absolute>
-                <v-card>
-                    <v-card-title>
-                        <span class="headline">{{ fname }} - Registration</span>
-                        <br>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-container grid-list-md>
-                            <v-layout wrap>
-                                <v-flex xs12 sm6 md4>
-                                    <v-text-field label="Legal first name*" required></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md4>
-                                    <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md4>
-                                    <v-text-field label="Legal last name*" hint="example of persistent helper text" persistent-hint required></v-text-field>
-                                </v-flex>
-                                <v-flex xs12>
-                                    <v-text-field label="Email*" required></v-text-field>
-                                </v-flex>
-                                <v-flex xs12>
-                                    <v-text-field label="Password*" type="password" required></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6>
-                                    <v-select :items="['0-17', '18-29', '30-54', '54+']" label="Age*" required></v-select>
-                                </v-flex>
-                                <v-flex xs12 sm6>
-                                    <v-autocomplete :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']" label="Interests" multiple></v-autocomplete>
-                                </v-flex>
-                            </v-layout>
-                        </v-container>
-                        <small>*indicates required field</small>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" flat @@click="dialog = false">Close</v-btn>
-                        <v-btn color="blue darken-1" flat @@click="dialog = false">Save</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-        </v-layout>
+<v-table ref="table" :items="products" :fields="fields" bordered hover :head-variant="'light'" responsive="sm" v-else>
+        <template v-slot:cell(index)="data">
+            {{ data.index+1 }}
+        </template>
+        <template v-slot:cell(name)="data">
+            <b-img thumbnail fluid :src="getImageUrl(data.item.image)" alt="Image 1" class="thumb-img"></b-img>
+            {{data.item.name}}
+        </template>
+        <template v-slot:cell(weights)="data">
+            <span v-weights="data.item"></span>
+        </template>
+        <template v-slot:cell(default_weight)="data">
+            <span v-floatFormatter="data.item.default_weight"></span>{{data.item.unit.sname}}
+        </template>
+        <template v-slot:cell(status)="data">
+            <span v-if="data.status" class="text-success text-bold">Active</span>
+            <span class="text-danger" v-else>Inactive</span>
+        </template>
+        <template v-slot:cell(action)="data">
+            <a @@click.prevent="editItem(data.item.id)"><i class="fa fa-edit" aria-hidden="true" title="Update product" v-b-tooltip.hover></i></a>
+            <a @@click.prevent="assignWeights(data.item.id)"><i class="fa fa-balance-scale" title="Assign weights" aria-hidden="true" v-b-tooltip.hover></i></a>
+        </template>
+    </v-table>
+
+
+
+</div>*@
+
+<script type="text/javascript">
+    //const vuetify = Vuetify.createVuetify()
+    //   const adminpage = Vue.createApp({
+    //       //Data Manager
+    //      props: ['category', 'singular', 'plural', 'products'],
+    //       data(){
+    //            return{
+    //            title: `All ${this.plural}`,
+    //            items: [],
+    //            editing: false,
+    //            weight_assignment: false,
+    //            model: null,
+    //            formTitle: '',
+    //            fields: [
+    //                {
+    //                    key: 'index',
+    //                    label: 'S.No.'
+    //                },
+    //                {
+    //                    key: 'name',
+    //                    sortable: true
+    //                },
+    //                {
+    //                    key: 'weights'
+    //                },
+    //                {
+    //                    key: 'default_weight',
+    //                    sortable: true
+    //                },
+    //                {
+    //                    key: 'status',
+    //                    sortable: true
+    //                },
+    //                {
+    //                    key: 'action'
+    //                }
+    //                ]
+    //            }
+    //       },
+    //       //Method Manager
+    //       methods:{
+    //        showAlert(a) {
+    //            //if (event.target.classList.contains('btn__content')) return;
+    //            /*alert('Alert! \n' + a.name);*/
+
+    //            this.selected.name = a.name;
+    //            this.selected.cal = a.calories;
+    //            this.selected.fat = a.fat;
+    //            this.fname = a.name
+
+    //            console.log(this.selected.fat);
+    //            console.log(this.fname);
+    //        }
+
+    //       },
+    //       // Computed Manager
+    //       computed:{
+
+    //       },
+    //       // Watch
+    //       watch:{
+
+    //       },
+    //       mounted (){
+               
+    //        }
+    //    }).use(vuetify).mount('#app');
+
+
+</script>
+
+
+    <div id="blog-posts-demo">
+    <div v-bind:style="{fontSize:postFontSize+'em'}">
+    <blog-post
+        v-for="post in posts"
+        :key="post.id"
+        :title="post.title"
+                   @@enlarge-text="postFontSize +=0.1"></blog-post>
     </div>
-</div>
+    </div>
+
+
+
 
 <script type="text/javascript">
     const vuetify = Vuetify.createVuetify()
-       const adminpage = Vue.createApp({
-           //Data Manager
-           data(){
-               return{
-                fname: 'Test',
-                selected: [],
-                dialog: false,
-                test: true,
-                headers: [
-                    {
-                        text: 'Training Title',
-                        align: 'left',
-                        sortable: false,
-                        value: 'name'
-                    },
-                    { text: 'Mentor', value: 'calories', sortable: false },
-                    { text: 'Schedule', value: 'fat', sortable: false },
-                    { text: '# of Registered Participants', value: 'carbs', sortable: false },
-                    { text: 'Register', value: 'protein', sortable: false }
-                    /*{ text: 'Iron (%)', value: 'iron',sortable: false }*/
-                ],
-                items: [
-                    {
-                        name: 'Frozen Yogurt',
-                        calories: 'Johnvel Mike Amarisca',
-                        fat: 'July 8',
-                        carbs: 3,
-                        protein: 4.0,
-                        iron: '1%'
-                    },
-                    {
-                        name: 'Ice cream sandwich',
-                        calories: 237,
-                        fat: 9.0,
-                        carbs: 37,
-                        protein: 4.3,
-                        iron: '1%'
-                    },
-                    {
-                        name: 'Eclair',
-                        calories: 262,
-                        fat: 16.0,
-                        carbs: 23,
-                        protein: 6.0,
-                        iron: '7%'
-                    },
-                    {
-                        name: 'Cupcake',
-                        calories: 305,
-                        fat: 3.7,
-                        carbs: 67,
-                        protein: 4.3,
-                        iron: '8%'
-                    },
-                    {
-                        name: 'Gingerbread',
-                        calories: 356,
-                        fat: 16.0,
-                        carbs: 49,
-                        protein: 3.9,
-                        iron: '16%'
-                    },
-                    {
-                        name: 'Jelly bean',
-                        calories: 375,
-                        fat: 0.0,
-                        carbs: 94,
-                        protein: 0.0,
-                        iron: '0%'
-                    },
-                    {
-                        name: 'Lollipop',
-                        calories: 392,
-                        fat: 0.2,
-                        carbs: 98,
-                        protein: 0,
-                        iron: '2%'
-                    },
-                    {
-                        name: 'Honeycomb',
-                        calories: 408,
-                        fat: 3.2,
-                        carbs: 87,
-                        protein: 6.5,
-                        iron: '45%'
-                    },
-                    {
-                        name: 'Donut',
-                        calories: 452,
-                        fat: 25.0,
-                        carbs: 51,
-                        protein: 4.9,
-                        iron: '22%'
-                    },
-                    {
-                        name: 'KitKat',
-                        calories: 518,
-                        fat: 26.0,
-                        carbs: 65,
-                        protein: 7,
-                        iron: '6%'
-                    }
-                ]
-            }
-           },
-           //Method Manager
-           methods:{
-            showAlert(a) {
-                //if (event.target.classList.contains('btn__content')) return;
-                /*alert('Alert! \n' + a.name);*/
+   
+    const App = {
+       
+          data() {
+                return{
+                 posts : [
+                        { id: 1, title: 'My journey with Vue' },
+                        { id: 2, title: 'Blogging with Vue' },
+                        { id: 3, title: 'why Vue is so fun!' },
+                        { id:4, title: '這是VUE' },
+                        { id:5, title: 'My journey with NET' },
+                    ],
+                    postFontSize: 1,
+                }
+           } 
+           
+      
+    }
 
-                this.selected.name = a.name;
-                this.selected.cal = a.calories;
-                this.selected.fat = a.fat;
-                this.fname = a.name
+    const app =Vue.createApp(App);
+    app.component("blog-post",{
+        props: ['title'], //傳遞至子類可接受
+        emit:['enlarge-text'],
+        template: `<div class="blog-post">
+            <h4>{{title}}</h4>
+            <button @@click="$emit('enlarge-text')">Enlarge text文字放大</button>
+        
+        </div>
+        
+        `    
+    });
 
-                console.log(this.selected.fat);
-                console.log(this.fname);
-            }
-
-           },
-           // Computed Manager
-           computed:{
-
-           },
-           // Watch
-           watch:{
-
-           },
-           mounted (){
-               
-            }
-        }).use(vuetify).mount('#app');
-
+    app.use(vuetify).mount('#blog-posts-demo');
 
 </script>
 

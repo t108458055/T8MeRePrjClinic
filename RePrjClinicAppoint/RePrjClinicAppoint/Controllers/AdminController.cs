@@ -26,6 +26,12 @@ namespace RePrjClinicAppoint.Controllers
             return View();
         }
 
+        public IActionResult Edit()
+        {
+            return View();
+        }
+
+
         public class myDe
         {
             public string id { get; set; }
