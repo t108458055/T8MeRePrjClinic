@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace RePrjClinicAppoint.Models.Entity
+namespace RePrjClinicAppoint.Models.Entities
 {
     /// <summary>
     /// 服務預約

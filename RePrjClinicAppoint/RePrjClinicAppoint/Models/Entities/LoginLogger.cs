@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
-namespace RePrjClinicAppoint.Models.Entity
+namespace RePrjClinicAppoint.Models.Entities
 {
     public class LoginLogger:DentalEntityAbstract
     {

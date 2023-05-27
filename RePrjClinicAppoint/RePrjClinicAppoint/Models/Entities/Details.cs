@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RePrjClinicAppoint.Models.Entity
+namespace RePrjClinicAppoint.Models.Entities
 { 
     /// <summary>
     /// 完成明細

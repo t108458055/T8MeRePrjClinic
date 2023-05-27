@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RePrjClinicAppoint.Models.Entity
+namespace RePrjClinicAppoint.Models.Entities
 {
     public class User : DentalAccountEntityAbstract
     {    

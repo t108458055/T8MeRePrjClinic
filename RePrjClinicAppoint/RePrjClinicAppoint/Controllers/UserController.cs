@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RePrjClinicAppoint.Models;
-using RePrjClinicAppoint.Models.Entity;
+using RePrjClinicAppoint.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

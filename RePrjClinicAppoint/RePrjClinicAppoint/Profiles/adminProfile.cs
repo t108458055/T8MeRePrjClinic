@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using RePrjClinicAppoint.Models.Entity;
+using RePrjClinicAppoint.Models.Entities;
 using RePrjClinicAppoint.ViewModels;
 using System;
 using System.Collections.Generic;

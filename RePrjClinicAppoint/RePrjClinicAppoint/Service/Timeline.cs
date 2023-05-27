@@ -1,4 +1,4 @@
-﻿using RePrjClinicAppoint.Models.Entity;
+﻿using RePrjClinicAppoint.Models.Entities;
 using System;
 using System.Collections.Generic;
 //預約 服務 處理
