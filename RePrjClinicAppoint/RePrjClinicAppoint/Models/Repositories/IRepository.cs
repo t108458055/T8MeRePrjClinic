@@ -31,8 +31,7 @@ namespace RePrjClinicAppoint.Models.Repositories
         /// <summary>
         ///  撈取參數 條件
         /// </summary>
-        T GetValue(Func<T, bool> predicate);
-        Task<T> GetValueAsync(Func<T, bool> predicate);
+        Task<T> GetValueAsync(Expression<Func<T, bool>> predicate);      
         /// <summary>
         ///  新增
         /// </summary>
