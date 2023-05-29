@@ -20,7 +20,7 @@
         margin: 0;
     }
 </style>
-    <script type="text/javascript">
+  @*  <script type="text/javascript">
         ////透過jQuery Selector 選擇文件之物件
         $(document).ready(
             //網頁初始化事件程序
@@ -57,7 +57,7 @@
 
      
         }
-    </script>
+    </script>*@
 
 
 <button id="create-user">觸發...</button>
@@ -90,7 +90,7 @@
                     <v-btn color="primary"
                            dark
                            v-bind="attrs"
-                           v-on="on">
+                           v-on:click="newform()">
                           新增
                     </v-btn>
                 </template>
@@ -174,7 +174,7 @@
                     <v-row>
                         <v-btn x-small color="red" v-on:click="deletedocId(item.id,index)">刪除</v-btn>
                         <v-btn x-small color="blue" v-on:click="update(item.id,item)">修改</v-btn>
-                        <v-btn x-small color="dark" v-on:click="dialog = true">巴巴</v-btn>
+                        <v-btn x-small color="yellow" v-on:click="edit(item.id,item)">編輯</v-btn>
                     </v-row>
                 </td>
                 <td>{{item.account}}</td>
@@ -290,17 +290,18 @@
                 deletedocId: function (id) {
                     //   let url = '/Admin/DeleteDoc/id?='+id;
                     ///*   let data = id;*/
-                    //   console.log(id);
-                    //   console.log(typeof (id));
-                    axios.post('/Admin/DeleteDoc/' + id)
-                        .then(function (res) {
-                            console.log('痘痘');
-                            alert(res.data);
-                            location.reload();
-                        })
-                        .catch(function (err) { console.log(err); });
+                       console.log(id);
+                       console.log(typeof (id));
+                    //axios.post('/Admin/DeleteDoc/' + id)
+                    //    .then(function (res) {
+                    //        console.log('痘痘');
+                    //        alert(res.data);
+                    //        location.reload();
+                    //    })
+                    //    .catch(function (err) { console.log(err); });
                 },
                 update: function (id, index) {
+                    console.log("更新Edit!!");
                     //let index = this.searchalldoclist.id;
                     console.log("id=" + id);
                     console.log("index=" + index);
@@ -314,6 +315,16 @@
                     //    })
                     //    .catch(function (err) { console.log(err); }
                     //    );
+                },
+                edit: function (id, index) {
+                    console.log("編輯Edit!!");
+                    console.log("index=" + index);
+                    let pp = JSON.stringify(index);
+                    console.log('json' + pp);
+                    console.log("有觸發");
+                },
+                newform: function (){
+                                this.dialog = true;
                 },
                 ch: function () {
                     let a = this;

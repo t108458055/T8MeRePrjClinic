@@ -5,7 +5,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@3.2.1/dist/vue.global.js"></script>
 <script src="https://unpkg.com/vue3-easy-data-table"></script>
 @*範例*@
-@*<div id="app">
+<div id="app">
     <easy-data-table :headers="headers"
                      :items="items" />
 </div>
@@ -36,11 +36,11 @@
         },
     };
     Vue.createApp(App).mount('#app');
-</script>*@
+</script>
 @*DDD*@
 
 
-<div id="app">
+@*<div id="app">
     <template>
  
         <v-data-table :headers="headers"
@@ -154,10 +154,10 @@
         </v-data-table>
     </template>
 </div>
-
+*@
 @*VUE3 不支援 V-TABLE*@
 @section Scripts{
-    <script type="text/javascript">
+  @*  <script type="text/javascript">
    
       
         const vuetify = Vuetify.createVuetify()
@@ -337,5 +337,5 @@
         }).use(vuetify).mount('#app');
 
 
-    </script>
+    </script>*@
 }
